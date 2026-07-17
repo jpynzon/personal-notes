@@ -1,0 +1,26 @@
+{
+  "name": "notes",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.117",
+    "@iconify-json/simple-icons": "^1.2.90",
+    "@iconify-json/vscode-icons": "^1.2.67",
+    "@nuxt/content": "^3.15.0",
+    "@nuxt/ui": "^4.10.0",
+    "mermaid": "^11.16.0",
+    "nuxt": "^4.4.8",
+    "vue": "^3.5.39",
+    "vue-router": "^5.1.0"
+  }
+}

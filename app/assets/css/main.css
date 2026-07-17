@@ -1,0 +1,175 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/* ============================================================================
+   AMBER TERMINAL — design tokens
+   A terminal-native identity built on warm amber phosphor (vintage CRT), not
+   the usual acid-green-on-black. Dark is the crafted primary; light is a
+   "paper printout" counterpart.
+   ========================================================================== */
+
+@theme static {
+  /* Type roles ------------------------------------------------------------ */
+  /* Body: humane, highly readable for long study sessions. */
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  /* Code, labels, metadata, navigation — the terminal's native voice. */
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  /* Display: condensed, technical, characterful — used with restraint. */
+  --font-display: "Martian Mono", var(--font-mono);
+
+  /* Phosphor (amber) — the one accent. Light → dark as shade climbs. ------ */
+  --color-phosphor-50: #fff8ec;
+  --color-phosphor-100: #ffedc9;
+  --color-phosphor-200: #ffd88f;
+  --color-phosphor-300: #ffc46b;
+  --color-phosphor-400: #ffb454; /* signature amber — dark-mode primary */
+  --color-phosphor-500: #f59e0b;
+  --color-phosphor-600: #d97e06;
+  --color-phosphor-700: #a16207; /* copper — light-mode primary (paper-safe) */
+  --color-phosphor-800: #854d0e;
+  --color-phosphor-900: #6b3f10;
+  --color-phosphor-950: #43230a;
+
+  /* Tight radii read more like a terminal than a card-heavy SaaS app. */
+  --ui-radius: 0.25rem;
+}
+
+/* Nuxt UI semantic tokens — LIGHT ("paper printout") ----------------------- */
+:root {
+  --ui-bg: #faf9f7;
+  --ui-bg-muted: #f1efea;
+  --ui-bg-elevated: #eae7df;
+  --ui-bg-accented: #e2ded6;
+  --ui-bg-inverted: #1f1d1a;
+
+  --ui-text-dimmed: #9c968b;
+  --ui-text-muted: #6e675d;
+  --ui-text-toned: #4b463e;
+  --ui-text: #1f1d1a;
+  --ui-text-highlighted: #100f0d;
+  --ui-text-inverted: #faf9f7;
+
+  --ui-border: #e2ded6;
+  --ui-border-muted: #ece9e2;
+  --ui-border-accented: #d5d0c6;
+  --ui-border-inverted: #1f1d1a;
+
+  /* Copper reads clearly on warm paper; amber-400 would fail contrast. */
+  --ui-primary: var(--color-phosphor-700);
+
+  --ui-container: 90rem;
+}
+
+/* Nuxt UI semantic tokens — DARK (primary identity) ------------------------ */
+.dark {
+  --ui-bg: #121110;          /* warm near-black, never pure #000 */
+  --ui-bg-muted: #1b1917;    /* cards, code blocks */
+  --ui-bg-elevated: #232019; /* popovers, hovered rows */
+  --ui-bg-accented: #2a2724;
+  --ui-bg-inverted: #e8e4dd;
+
+  --ui-text-dimmed: #6b665d;
+  --ui-text-muted: #8f8a81;
+  --ui-text-toned: #b8b2a7;
+  --ui-text: #e8e4dd;        /* warm off-white */
+  --ui-text-highlighted: #fdfbf7;
+  --ui-text-inverted: #121110;
+
+  --ui-border: #2a2724;
+  --ui-border-muted: #211e1b;
+  --ui-border-accented: #383430;
+  --ui-border-inverted: #e8e4dd;
+
+  --ui-primary: var(--color-phosphor-400);
+}
+
+/* ============================================================================
+   Base treatment
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--ui-bg);
+  color: var(--ui-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Page chrome (brand, hero, section labels) carries the display face; used
+   with restraint via the explicit utility. */
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Inside long-form notes, headings use the readable sans at strong weight —
+   Martian Mono's width would fight sustained reading. They stay distinct from
+   body via weight and a hairline rule (see prose refinements below). */
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-sans);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  color: var(--ui-text-highlighted);
+}
+
+/* The site's voice for structural chrome: nav, labels, metadata, badges. */
+.font-terminal {
+  font-family: var(--font-mono);
+  font-feature-settings: "ss01", "zero";
+}
+
+/* Custom selection tint in the phosphor accent. */
+::selection {
+  background-color: color-mix(in oklab, var(--ui-primary) 30%, transparent);
+  color: var(--ui-text-highlighted);
+}
+
+/* ============================================================================
+   Signature: the blinking block cursor used by the shell-path prompt
+   ========================================================================== */
+
+.terminal-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  translate: 0 0.16em;
+  background-color: var(--ui-primary);
+  animation: cursor-blink 1.1s steps(1) infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* ============================================================================
+   Prose refinements — keep upstream behaviour (copy buttons, anchors), just
+   tune the reading surface.
+   ========================================================================== */
+
+.prose :where(h2) {
+  margin-top: 2.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ui-border-muted);
+}
+
+.prose :where(code):not(pre code)::before,
+.prose :where(code):not(pre code)::after {
+  content: none; /* drop the default backtick pseudo-elements */
+}
+
+/* Quality floor: honour reduced-motion everywhere. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .terminal-cursor { animation: none; opacity: 1; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
