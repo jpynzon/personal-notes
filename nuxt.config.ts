@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   // prose components are registered with the MDC renderer (copy buttons,
   // callouts, code-groups, etc.). @nuxt/ui bundles Tailwind v4, @nuxt/icon,
   // @nuxt/fonts and color-mode — do not add those separately.
-  modules: ['@nuxt/ui', '@nuxt/content'],
+  modules: ['@nuxt/ui', '@nuxt/content', '@vercel/analytics/nuxt'],
 
   css: ['~/assets/css/main.css'],
 
