@@ -62,7 +62,8 @@ export default defineNuxtConfig({
             'bash', 'shell', 'sh', 'powershell', 'js', 'ts', 'jsx', 'tsx',
             'vue', 'vue-html', 'html', 'css', 'scss', 'json', 'jsonc', 'yaml',
             'toml', 'ini', 'md', 'mdc', 'php', 'blade', 'sql', 'dockerfile',
-            'docker', 'nginx', 'apache', 'diff', 'regex', 'python', 'http'
+            'docker', 'nginx', 'apache', 'diff', 'regex', 'python', 'http',
+            'csharp', 'cs'
           ]
         }
       }
